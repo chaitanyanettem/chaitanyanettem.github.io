@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -38,7 +38,7 @@ func main() {
 
 	for _, file := range files {
 		// Read the markdown file
-		mdContent, err := ioutil.ReadFile(file)
+		mdContent, err := os.ReadFile(file)
 		if err != nil {
 			fmt.Printf("Error reading file %s: %v\n", file, err)
 			continue
@@ -65,7 +65,7 @@ func main() {
 		completeHTML := fmt.Sprintf(htmlTemplate, htmlContent)
 
 		// Write the HTML file
-		err = ioutil.WriteFile(
+		err = os.WriteFile(
 			outFilename,
 			[]byte(completeHTML),
 			0644,
@@ -79,7 +79,7 @@ func main() {
 	}
 
 	// Copy the CSS file to the public directory
-	err = ioutil.WriteFile("styles.css", []byte(readCSSContent()), 0644)
+	err = os.WriteFile("styles.css", []byte(readCSSContent()), 0644)
 	if err != nil {
 		fmt.Printf("Error writing CSS file: %v\n", err)
 		return

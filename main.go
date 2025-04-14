@@ -20,7 +20,7 @@ const htmlTemplate = `<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chaitanya Nettem - Personal Website</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=%d">
 </head>
 <body>
     <div class="container">
@@ -31,6 +31,9 @@ const htmlTemplate = `<!DOCTYPE html>
 </html>`
 
 func main() {
+	// Get current timestamp for cache busting
+	timestamp := time.Now().Unix()
+
 	// Read all markdown files from the content directory
 	files, err := filepath.Glob("content/*.md")
 	if err != nil {
@@ -66,8 +69,13 @@ func main() {
 		// Get current date in the desired format
 		currentDate := time.Now().Format("January 2006")
 
-		// Insert the HTML content and date into the template
-		completeHTML := fmt.Sprintf(htmlTemplate, htmlContent, currentDate)
+		// Insert the HTML content, timestamp, and date into the template
+		completeHTML := fmt.Sprintf(
+			htmlTemplate,
+			timestamp,
+			htmlContent,
+			currentDate,
+		)
 
 		// Write the HTML file
 		err = os.WriteFile(

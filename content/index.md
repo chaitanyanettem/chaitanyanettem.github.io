@@ -2,7 +2,7 @@
 
 [BLOG](https://chaitanyanettem.com/blog) | [RESUME](https://chaitanyanettem.com/Chaitanya_Nettem_CV.pdf) | [GITHUB](https://github.com/chaitanyanettem) | [LINKEDIN](https://www.linkedin.com/in/cnettem)
 
-Hi! My name is Chaitanya Nettem. I'm a Software Engineer at [Rubrik](https://rubrik.com). I help build complex distributed systems for data protection and storage. For the last 3 years I have been a tech lead on Rubrik's distributed filesystem team.
+Hi! My name is Chaitanya Nettem. I'm a Software Engineer at [Rubrik](https://rubrik.com). I help build complex distributed systems for data protection and storage. For the last 3 years I have been working on Atlas, Rubrik's distributed filesystem team.
 
 In the past I was a founding engineer and lead at [Mason](https://getmason.io) where I built software for making content creation and collaboration at scale easy for designers and creative teams.
 

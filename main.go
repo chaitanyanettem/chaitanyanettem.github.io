@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -30,13 +29,6 @@ const htmlTemplate = `<!DOCTYPE html>
 </html>`
 
 func main() {
-	// Create output directory if it doesn't exist
-	err := os.MkdirAll("public", 0755)
-	if err != nil {
-		fmt.Printf("Error creating output directory: %v\n", err)
-		return
-	}
-
 	// Read all markdown files from the content directory
 	files, err := filepath.Glob("content/*.md")
 	if err != nil {
@@ -74,7 +66,7 @@ func main() {
 
 		// Write the HTML file
 		err = ioutil.WriteFile(
-			filepath.Join("public", outFilename),
+			outFilename,
 			[]byte(completeHTML),
 			0644,
 		)
@@ -87,7 +79,7 @@ func main() {
 	}
 
 	// Copy the CSS file to the public directory
-	err = ioutil.WriteFile("public/styles.css", []byte(readCSSContent()), 0644)
+	err = ioutil.WriteFile("styles.css", []byte(readCSSContent()), 0644)
 	if err != nil {
 		fmt.Printf("Error writing CSS file: %v\n", err)
 		return

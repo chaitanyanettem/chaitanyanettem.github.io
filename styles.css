@@ -1,8 +1,9 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400);  /* Changed 500 to 400 */
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 html {
   font: 16px/1.5 "Roboto", sans-serif;
+  font-weight: 300;  /* Keep body text light at 300 */
 }
 
 @media (min-width: 30rem) {
@@ -15,12 +16,83 @@ body {
   margin: 0;
   color: #333;
   background-color: #fff;
+  overflow-x: hidden; /* Move overflow control to body level */
 }
 
 .container {
-  max-width: 42rem;
+  max-width: 90%;  /* Keep this for mobile responsiveness */
+  width: 760px;    /* Narrow width for all content */
   margin: 0 auto;
   padding: 2rem 1rem 5rem;
+  position: relative;  /* Add this to establish positioning context */
+  /* Remove overflow-x: hidden from here */
+}
+
+/* Photography Grid */
+.photo-grid {
+  width: calc(100vw - 4rem); /* Account for padding */
+  max-width: 1400px;  /* Increased from 1200px */
+  margin-left: 50%;
+  transform: translateX(-50%);
+  position: relative;
+  columns: 3;
+  column-gap: 2rem;
+  padding: 0 2rem;
+  box-sizing: border-box;  /* Added to include padding in width calculation */
+}
+
+.photo-item {
+  break-inside: avoid;
+  margin-bottom: 2rem;
+  position: relative;
+  width: 100%;
+  display: inline-block;
+}
+
+.photo-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.photo-item:hover img {
+  transform: scale(1.05);
+}
+
+.photo-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 1rem;
+  margin: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.photo-item:hover .photo-caption {
+  opacity: 1;
+}
+
+@media (max-width: 1400px) {
+  .photo-grid {
+    columns: 2;
+    column-gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .photo-grid {
+    width: 100%;
+    margin: 0;
+    columns: 1;
+    column-gap: 1rem;
+    padding: 0;
+    transform: none;
+  }
 }
 
 a {
@@ -59,9 +131,34 @@ h1 a {
 
 .nav-links {
   margin: 2rem 0 2rem;
-  font-weight: bold;
+  font-weight: 400;  /* Changed from 500 to 400 */
   text-transform: uppercase;
   font-size: 1rem;
+}
+
+/* Style for current page */
+.nav-links a.current {
+  color: #333;
+  cursor: default;
+  text-decoration: none;
+  pointer-events: auto;  /* Enable hover effects but keep click disabled */
+}
+
+/* Style for current page hover */
+.nav-links a.current:hover {
+  text-decoration: underline;
+  cursor: default;
+}
+
+/* Style for non-current nav links */
+.nav-links a {
+  color: #0074d9;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
 }
 
 h2 {
@@ -226,4 +323,57 @@ a[tooltip] {
   border-top: 1px solid #eee;
   font-size: 0.8rem;
   color: #999;
+}
+
+/* Lightbox styles */
+.lightbox-overlay {
+  display: none; /* Initial state is hidden */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 1000;
+  cursor: default;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* Show lightbox when active class is present */
+.lightbox-overlay.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-content {
+  position: relative;
+  width: 85vw;  /* Reduced from 95vw */
+  height: 85vh; /* Reduced from 95vh */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-content img {
+  max-width: 85vw;  /* Reduced from 95vw */
+  max-height: 80vh; /* Reduced from 90vh */
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+  cursor: default;
+}
+
+.lightbox-caption {
+  color: white;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 1rem;
+  margin: 0;
+  position: absolute;
+  bottom: -3rem;
+  left: 0;
+  right: 0;
 }

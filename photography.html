@@ -4,53 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chaitanya Nettem - Personal Website</title>
-    <link rel="stylesheet" href="/styles.css?v=1744782221">
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="/styles.css?v=1744831093" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Add meta description for SEO -->
+    <meta name="description" content="Personal website of Chaitanya Nettem, Software Engineer at Rubrik">
+    
+    <!-- Prevent FOUC -->
+    <script>
+        let FF_FOUC_FIX;
+    </script>
+    
+    <!-- Load styles -->
+    <link rel="stylesheet" href="/styles.css?v=1744831093">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Defer non-critical JavaScript -->
+    <script defer src="/script.js?v=1744831093"></script>
 </head>
 <body>
     <div class="container">
         <header>
             <h1 class="site-title"><a href="/">Chaitanya Nettem</a></h1>
-            <nav class="nav-links">
-                <a href="/blog/" >BLOG</a> /
-                <a href="/photography.html" class="active">PHOTOGRAPHY</a> /
-                <a href="/Chaitanya_Nettem_CV.pdf">RESUME</a> /
-                <a href="https://github.com/chaitanyanettem" target="_blank">GITHUB</a> /
-                <a href="https://www.linkedin.com/in/cnettem" target="_blank">LINKEDIN</a>
-            </nav>
+            <div class="nav-container">
+                <nav class="nav-links">
+                    <a href="/blog/" >BLOG</a> /
+                    <a href="/photography.html" class="active">PHOTOGRAPHY</a> /
+                    <a href="/Chaitanya_Nettem_CV.pdf">RESUME</a>
+                </nav>
+                <div class="social-links">
+                    <a href="https://github.com/chaitanyanettem" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/cnettem" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
         </header>
         <p>I shoot with a Sony A6400. My lenses are a Sony 18-55mm f/3.5-5.6 and a TTArtisan 25mm f/2. Some photos are from my trusty OnePlus 7T.</p>
-        <div class="photo-grid"><div class="photo-item">
-            <a href="./content/photos/DSC02427.JPG.web.jpg" class="lightbox">
-                <img src="./content/photos/DSC02427.JPG.web.jpg" alt="Somewhere in Gir Forest, Gujarat, January 2024">
-                <p class="photo-caption">Somewhere in Gir Forest, Gujarat, January 2024</p>
-            </a>
-        </div><div class="photo-item">
-            <a href="./content/photos/DSC02428.JPG.web.jpg" class="lightbox">
-                <img src="./content/photos/DSC02428.JPG.web.jpg" alt="Somewhere in Gir Forest, Gujarat, January 2024">
-                <p class="photo-caption">Somewhere in Gir Forest, Gujarat, January 2024</p>
-            </a>
-        </div><div class="photo-item">
-            <a href="./content/photos/DSC01732.JPG.web.jpg" class="lightbox">
-                <img src="./content/photos/DSC01732.JPG.web.jpg" alt="Mandore, Jodhpur, December 2023">
-                <p class="photo-caption">Mandore, Jodhpur, December 2023</p>
-            </a>
-        </div><div class="photo-item">
-            <a href="./content/photos/DSC01232.JPG.web.jpg" class="lightbox">
-                <img src="./content/photos/DSC01232.JPG.web.jpg" alt="Mehrangarh Fort, Jodhpur, December 2023">
-                <p class="photo-caption">Mehrangarh Fort, Jodhpur, December 2023</p>
-            </a>
-        </div><div class="photo-item">
-            <a href="./content/photos/DSC01619.JPG.web.jpg" class="lightbox">
-                <img src="./content/photos/DSC01619.JPG.web.jpg" alt="Mandore, Jodhpur, December 2023">
-                <p class="photo-caption">Mandore, Jodhpur, December 2023</p>
-            </a>
-        </div></div>
-        
+<div class="photo-grid"><div class="photo-item">
+				<a href="./content/photos/DSC02427.JPG.web.jpg" class="lightbox">
+					<img src="./content/photos/DSC02427.JPG.web.jpg" alt="Somewhere in Gir Forest, Gujarat, January 2024">
+					<p class="photo-caption">Somewhere in Gir Forest, Gujarat, January 2024</p>
+				</a>
+			</div><div class="photo-item">
+				<a href="./content/photos/DSC02428.JPG.web.jpg" class="lightbox">
+					<img src="./content/photos/DSC02428.JPG.web.jpg" alt="Somewhere in Gir Forest, Gujarat, January 2024">
+					<p class="photo-caption">Somewhere in Gir Forest, Gujarat, January 2024</p>
+				</a>
+			</div><div class="photo-item">
+				<a href="./content/photos/DSC01732.JPG.web.jpg" class="lightbox">
+					<img src="./content/photos/DSC01732.JPG.web.jpg" alt="Mandore, Jodhpur, December 2023">
+					<p class="photo-caption">Mandore, Jodhpur, December 2023</p>
+				</a>
+			</div><div class="photo-item">
+				<a href="./content/photos/DSC01232.JPG.web.jpg" class="lightbox">
+					<img src="./content/photos/DSC01232.JPG.web.jpg" alt="Mehrangarh Fort, Jodhpur, December 2023">
+					<p class="photo-caption">Mehrangarh Fort, Jodhpur, December 2023</p>
+				</a>
+			</div><div class="photo-item">
+				<a href="./content/photos/DSC01619.JPG.web.jpg" class="lightbox">
+					<img src="./content/photos/DSC01619.JPG.web.jpg" alt="Mandore, Jodhpur, December 2023">
+					<p class="photo-caption">Mandore, Jodhpur, December 2023</p>
+				</a>
+			</div></div>
+
         <div class="footer">
             <span class="last-updated">Last updated: April 2025</span>
             <span class="copyright">© Chaitanya Nettem</span>
         </div>
     </div>
-    <script src="/script.js?v=1744782221"></script>
 </body>
 </html>

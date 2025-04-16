@@ -5,7 +5,7 @@
     "slug": "learning-go"
 }
 
-# Learning Go as an experienced developer
+# Learning Go
 
 I recently had to pickup Go for work. This post contains my notes on the language.
 

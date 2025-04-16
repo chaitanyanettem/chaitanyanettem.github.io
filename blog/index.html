@@ -4,29 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chaitanya Nettem - Personal Website</title>
-    <link rel="stylesheet" href="/styles.css?v=1744782221">
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="/styles.css?v=1744831093" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Add meta description for SEO -->
+    <meta name="description" content="Personal website of Chaitanya Nettem, Software Engineer at Rubrik">
+    
+    <!-- Prevent FOUC -->
+    <script>
+        let FF_FOUC_FIX;
+    </script>
+    
+    <!-- Load styles -->
+    <link rel="stylesheet" href="/styles.css?v=1744831093">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Defer non-critical JavaScript -->
+    <script defer src="/script.js?v=1744831093"></script>
 </head>
 <body>
     <div class="container">
         <header>
             <h1 class="site-title"><a href="/">Chaitanya Nettem</a></h1>
-            <nav class="nav-links">
-                <a href="/blog/" class="active">BLOG</a> /
-                <a href="/photography.html" >PHOTOGRAPHY</a> /
-                <a href="/Chaitanya_Nettem_CV.pdf">RESUME</a> /
-                <a href="https://github.com/chaitanyanettem" target="_blank">GITHUB</a> /
-                <a href="https://www.linkedin.com/in/cnettem" target="_blank">LINKEDIN</a>
-            </nav>
+            <div class="nav-container">
+                <nav class="nav-links">
+                    <a href="/blog/" class="active">BLOG</a> /
+                    <a href="/photography.html" >PHOTOGRAPHY</a> /
+                    <a href="/Chaitanya_Nettem_CV.pdf">RESUME</a>
+                </nav>
+                <div class="social-links">
+                    <a href="https://github.com/chaitanyanettem" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/cnettem" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
         </header>
-        <h3 id="learning-go-as-an-experienced-developer-learning-go-html-span-class-post-date-2025-04-15-span"><a href="./learning-go.html">Learning Go as an experienced developer</a> <span class="post-date">2025-04-15</span></h3>
-        
-        <p>A short introduction to Go from an experienced developer&rsquo;s perspective.</p>
-        
+        <h3 id="learning-go-learning-go-html-span-class-post-date-2025-04-15-span"><a href="./learning-go.html">Learning Go</a> <span class="post-date">2025-04-15</span></h3>
+
+<p>A short introduction to Go from an experienced developer&rsquo;s perspective.</p>
+
         <div class="footer">
             <span class="last-updated">Last updated: April 2025</span>
             <span class="copyright">© Chaitanya Nettem</span>
         </div>
     </div>
-    <script src="/script.js?v=1744782221"></script>
 </body>
 </html>

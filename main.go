@@ -20,7 +20,7 @@ type BlogMetadata struct {
 	Date  string   `json:"date"`
 	Tags  []string `json:"tags"`
 	Short string   `json:"short"`
-	Slug  string   `json:"slug"`  // Add slug to metadata struct
+	Slug  string   `json:"slug"` // Add slug to metadata struct
 }
 
 type BlogPost struct {
@@ -44,19 +44,46 @@ const htmlTemplate = `<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chaitanya Nettem - Personal Website</title>
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="/styles.css?v={{.Timestamp}}" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Add meta description for SEO -->
+    <meta name="description" content="Personal website of Chaitanya Nettem, Software Engineer at Rubrik">
+    
+    <!-- Prevent FOUC -->
+    <script>
+        let FF_FOUC_FIX;
+    </script>
+    
+    <!-- Load styles -->
     <link rel="stylesheet" href="/styles.css?v={{.Timestamp}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Defer non-critical JavaScript -->
+    <script defer src="/script.js?v={{.Timestamp}}"></script>
 </head>
 <body>
     <div class="container">
         <header>
             <h1 class="site-title"><a href="/">Chaitanya Nettem</a></h1>
-            <nav class="nav-links">
-                <a href="/blog/" {{if hasPrefix .CurrentPage "blog/"}}class="active"{{end}}>BLOG</a> /
-                <a href="/photography.html" {{if eq .CurrentPage "photography.html"}}class="active"{{end}}>PHOTOGRAPHY</a> /
-                <a href="/Chaitanya_Nettem_CV.pdf">RESUME</a> /
-                <a href="https://github.com/chaitanyanettem" target="_blank">GITHUB</a> /
-                <a href="https://www.linkedin.com/in/cnettem" target="_blank">LINKEDIN</a>
-            </nav>
+            <div class="nav-container">
+                <nav class="nav-links">
+                    <a href="/blog/" {{if hasPrefix .CurrentPage "blog/"}}class="active"{{end}}>BLOG</a> /
+                    <a href="/photography.html" {{if eq .CurrentPage "photography.html"}}class="active"{{end}}>PHOTOGRAPHY</a> /
+                    <a href="/Chaitanya_Nettem_CV.pdf">RESUME</a>
+                </nav>
+                <div class="social-links">
+                    <a href="https://github.com/chaitanyanettem" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/cnettem" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
         </header>
         {{.Content}}
         <div class="footer">
@@ -64,7 +91,6 @@ const htmlTemplate = `<!DOCTYPE html>
             <span class="copyright">© Chaitanya Nettem</span>
         </div>
     </div>
-    <script src="/script.js?v={{.Timestamp}}"></script>
 </body>
 </html>`
 
@@ -121,15 +147,15 @@ func main() {
 		data := PageData{
 			Timestamp:   timestamp,
 			CurrentPage: "blog/" + post.Slug + ".html",
-			Content:     fmt.Sprintf(`
+			Content: fmt.Sprintf(`
 				<div class="back-link">
-					<a href="/blog/">← Back to All Blogs</a>
+					<a href="/blog/">Back to All Blogs</a>
 				</div>
 				<h1>%s</h1>
 				<div class="post-meta">
 					<span class="post-date">%s</span>
 				</div>
-				%s`, 
+				%s`,
 				post.Title,
 				post.Metadata.Date,
 				post.Content),
@@ -138,7 +164,7 @@ func main() {
 
 		outPath := filepath.Join("blog", post.Slug+".html")
 		fmt.Printf("Generating blog post: %s\n", outPath)
-		
+
 		outFile, err := os.Create(outPath)
 		if err != nil {
 			fmt.Printf("Error creating blog file: %v\n", err)
@@ -149,7 +175,7 @@ func main() {
 			fmt.Printf("Error executing template: %v\n", err)
 		}
 		outFile.Close()
-		
+
 		fmt.Printf("Successfully generated blog post: %s\n", outPath)
 	}
 
@@ -321,7 +347,7 @@ func processBlogPost(filename string) (BlogPost, error) {
 
 	// Remove the title from the content and convert to HTML
 	contentWithoutTitle := titleRe.ReplaceAllString(parts[1], "")
-	
+
 	// Use metadata slug if available, otherwise derive from filename
 	var slug string
 	if metadata.Slug != "" {
@@ -331,7 +357,7 @@ func processBlogPost(filename string) (BlogPost, error) {
 		base := filepath.Base(filename)
 		slug = strings.TrimSuffix(base, ".md")
 	}
-	
+
 	return BlogPost{
 		Metadata: metadata,
 		Title:    title,

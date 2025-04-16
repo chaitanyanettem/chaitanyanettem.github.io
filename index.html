@@ -4,19 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chaitanya Nettem - Personal Website</title>
-    <link rel="stylesheet" href="/styles.css?v=1744782221">
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="/styles.css?v=1744831093" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Add meta description for SEO -->
+    <meta name="description" content="Personal website of Chaitanya Nettem, Software Engineer at Rubrik">
+    
+    <!-- Prevent FOUC -->
+    <script>
+        let FF_FOUC_FIX;
+    </script>
+    
+    <!-- Load styles -->
+    <link rel="stylesheet" href="/styles.css?v=1744831093">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Defer non-critical JavaScript -->
+    <script defer src="/script.js?v=1744831093"></script>
 </head>
 <body>
     <div class="container">
         <header>
             <h1 class="site-title"><a href="/">Chaitanya Nettem</a></h1>
-            <nav class="nav-links">
-                <a href="/blog/" >BLOG</a> /
-                <a href="/photography.html" >PHOTOGRAPHY</a> /
-                <a href="/Chaitanya_Nettem_CV.pdf">RESUME</a> /
-                <a href="https://github.com/chaitanyanettem" target="_blank">GITHUB</a> /
-                <a href="https://www.linkedin.com/in/cnettem" target="_blank">LINKEDIN</a>
-            </nav>
+            <div class="nav-container">
+                <nav class="nav-links">
+                    <a href="/blog/" >BLOG</a> /
+                    <a href="/photography.html" >PHOTOGRAPHY</a> /
+                    <a href="/Chaitanya_Nettem_CV.pdf">RESUME</a>
+                </nav>
+                <div class="social-links">
+                    <a href="https://github.com/chaitanyanettem" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/cnettem" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
         </header>
         <p>Hi! My name is <span tooltip="Pronounced: Chai-tuh-nya">Chaitanya</span>. I&rsquo;m a Software Engineer at <a href="https://rubrik.com" target="_blank">Rubrik</a>. I help build complex distributed systems for data protection and storage. For the last 3 years I have been one of the tech leads for Atlas, Rubrik&rsquo;s distributed filesystem. Atlas is deployed on thousands of clusters across the world both on-premises and in the cloud with total data under management at exabyte scale.</p>
 
@@ -44,6 +71,5 @@
             <span class="copyright">© Chaitanya Nettem</span>
         </div>
     </div>
-    <script src="/script.js?v=1744782221"></script>
 </body>
 </html>

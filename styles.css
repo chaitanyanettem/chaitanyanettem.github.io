@@ -36,7 +36,7 @@ body {
   transform: translateX(-50%);
   position: relative;
   columns: 3;
-  column-gap: 2rem;
+  column-gap: 2rem; /* Increased back to 2rem for more space between columns */
   padding: 0 2rem;
   box-sizing: border-box;  /* Added to include padding in width calculation */
 }
@@ -47,30 +47,47 @@ body {
   position: relative;
   width: 100%;
   display: inline-block;
+  padding: 0.5rem;
+  background: #ebe7dc; /* Darker, more noticeable vintage paper color */
+  box-shadow: 0 5px 7px rgba(0, 0, 0, 0.15); /* Increased shadow depth and spread */
+  border-radius: 4px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-origin: center center;
+  box-sizing: border-box;
+}
+
+.photo-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* Increased hover shadow */
+  z-index: 1;
+  background: #e3dfd2; /* Darker hover state for better contrast */
 }
 
 .photo-item img {
   width: 100%;
   height: auto;
   display: block;
+  border-radius: 2px;
   transition: transform 0.3s ease;
 }
 
+/* Remove the scale transform from img since we're transforming the entire card */
 .photo-item:hover img {
-  transform: scale(1.05);
+  transform: none;
 }
 
 .photo-caption {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 0.5rem; /* Adjusted to match new padding */
+  left: 0.5rem;   /* Adjusted to match new padding */
+  right: 0.5rem;  /* Adjusted to match new padding */
   background: rgba(0, 0, 0, 0.7);
   color: white;
   padding: 1rem;
   margin: 0;
   opacity: 0;
   transition: opacity 0.3s ease;
+  border-radius: 2px;
 }
 
 .photo-item:hover .photo-caption {
@@ -80,7 +97,7 @@ body {
 @media (max-width: 1400px) {
   .photo-grid {
     columns: 2;
-    column-gap: 1.5rem;
+    column-gap: 2rem; /* Keep consistent gap */
   }
 }
 
@@ -89,9 +106,13 @@ body {
     width: 100%;
     margin: 0;
     columns: 1;
-    column-gap: 1rem;
-    padding: 0;
+    column-gap: 0;
+    padding: 1rem; /* Add some padding on mobile */
     transform: none;
+  }
+  
+  .photo-item {
+    margin-bottom: 2rem;
   }
 }
 

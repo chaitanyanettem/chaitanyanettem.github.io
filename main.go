@@ -34,7 +34,7 @@ type PageData struct {
 	Timestamp   int64
 	CurrentPage string
 	Content     string
-	LastUpdated string
+	LastUpdated string  // This will now be per-file
 	BlogPosts   []BlogPost
 }
 
@@ -109,7 +109,6 @@ func main() {
 
 	// Get current timestamp for cache busting
 	timestamp := time.Now().Unix()
-	currentDate := time.Now().Format("January 2006")
 
 	// Clean up blog directory
 	if err := os.RemoveAll("blog"); err != nil {
@@ -159,7 +158,7 @@ func main() {
 				post.Title,
 				post.Metadata.Date,
 				post.Content),
-			LastUpdated: currentDate,
+			LastUpdated: getLastModifiedDate(file),  // Use the source file's last modified date
 		}
 
 		outPath := filepath.Join("blog", post.Slug+".html")
@@ -197,11 +196,26 @@ func main() {
 		}
 	}
 
+	var lastUpdated string
+	if len(blogFiles) > 0 {
+		// Use the most recent blog file modification as the index last updated date
+		latest := time.Time{}
+		for _, file := range blogFiles {
+			info, err := os.Stat(file)
+			if err == nil && info.ModTime().After(latest) {
+				latest = info.ModTime()
+			}
+		}
+		lastUpdated = latest.Format("January 2006")
+	} else {
+		lastUpdated = time.Now().Format("January 2006")
+	}
+
 	data := PageData{
 		Timestamp:   timestamp,
 		CurrentPage: "blog/index.html",
 		Content:     markdownToHTML([]byte(blogIndexContent.String())),
-		LastUpdated: currentDate,
+		LastUpdated: lastUpdated,
 	}
 
 	outFile, err := os.Create(filepath.Join("blog", "index.html"))
@@ -235,7 +249,7 @@ func main() {
 			Timestamp:   timestamp,
 			CurrentPage: outFilename,
 			Content:     markdownToHTML(mdContent),
-			LastUpdated: currentDate,
+			LastUpdated: getLastModifiedDate(file),  // Use the source file's last modified date
 		}
 
 		outFile, err := os.Create(outFilename)
@@ -364,4 +378,12 @@ func processBlogPost(filename string) (BlogPost, error) {
 		Content:  markdownToHTML([]byte(contentWithoutTitle)),
 		Slug:     slug,
 	}, nil
+}
+
+func getLastModifiedDate(filepath string) string {
+	info, err := os.Stat(filepath)
+	if err != nil {
+		return time.Now().Format("January 2006")
+	}
+	return info.ModTime().Format("January 2006")
 }

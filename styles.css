@@ -48,7 +48,7 @@ body {
   width: 100%;
   display: inline-block;
   padding: 0.5rem;
-  background: #ebe7dc; /* Darker, more noticeable vintage paper color */
+  background: #cbd7ec; /* Darker, more noticeable vintage paper color */
   box-shadow: 0 5px 7px rgba(0, 0, 0, 0.15); /* Increased shadow depth and spread */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   transform-origin: center center;

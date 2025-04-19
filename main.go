@@ -24,11 +24,11 @@ type BlogMetadata struct {
 }
 
 type BlogPost struct {
-	Metadata BlogMetadata
-	Title    string
-	Content  string
+	Metadata   BlogMetadata
+	Title      string
+	Content    string
 	RawContent string // Add this field
-	Slug     string
+	Slug       string
 }
 
 type PageData struct {
@@ -288,7 +288,7 @@ func main() {
 	// Generate 404 page
 	errorContent, err := os.ReadFile("content/404.md")
 	if err != nil {
-		fmt.Printf("Error reading error.md: %v\n", err)
+		fmt.Printf("Error reading 404.md: %v\n", err)
 		return
 	}
 
@@ -431,11 +431,11 @@ func processBlogPost(filename string) (BlogPost, error) {
 	contentWithoutTitle := titleRe.ReplaceAllString(parts[1], "")
 
 	return BlogPost{
-		Metadata: metadata,
-		Title:    title,
-		Content:  markdownToHTML([]byte(contentWithoutTitle)),
+		Metadata:   metadata,
+		Title:      title,
+		Content:    markdownToHTML([]byte(contentWithoutTitle)),
 		RawContent: contentWithoutTitle, // Store the raw content
-		Slug:     metadata.Slug,
+		Slug:       metadata.Slug,
 	}, nil
 }
 

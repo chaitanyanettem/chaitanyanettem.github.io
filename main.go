@@ -286,7 +286,7 @@ func main() {
 	}
 
 	// Generate 404 page
-	errorContent, err := os.ReadFile("content/error.md")
+	errorContent, err := os.ReadFile("content/404.md")
 	if err != nil {
 		fmt.Printf("Error reading error.md: %v\n", err)
 		return

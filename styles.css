@@ -50,7 +50,6 @@ body {
   padding: 0.5rem;
   background: #ebe7dc; /* Darker, more noticeable vintage paper color */
   box-shadow: 0 5px 7px rgba(0, 0, 0, 0.15); /* Increased shadow depth and spread */
-  border-radius: 4px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   transform-origin: center center;
   box-sizing: border-box;
@@ -67,7 +66,6 @@ body {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 2px;
   transition: transform 0.3s ease;
 }
 
@@ -87,7 +85,6 @@ body {
   margin: 0;
   opacity: 0;
   transition: opacity 0.3s ease;
-  border-radius: 2px;
 }
 
 .photo-item:hover .photo-caption {
@@ -418,21 +415,23 @@ a[tooltip] {
 
 .lightbox-content {
   position: relative;
-  width: 85vw;  /* Reduced from 95vw */
-  height: 85vh; /* Reduced from 95vh */
+  max-width: 95vw;
+  max-height: 85vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0.4rem;
+  background: #ebe7dc;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
 }
 
 .lightbox-content img {
-  max-width: 85vw;  /* Reduced from 95vw */
-  max-height: 80vh; /* Reduced from 90vh */
+  max-width: calc(95vw - 0.8rem);
+  max-height: calc(85vh - 0.8rem);
   width: auto;
   height: auto;
   object-fit: contain;
-  border-radius: 4px;
-  cursor: default;
 }
 
 .lightbox-caption {
@@ -445,6 +444,38 @@ a[tooltip] {
   bottom: -3rem;
   left: 0;
   right: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+  .lightbox-content {
+    max-height: 80vh; /* Reduced height on mobile to leave more room for caption */
+  }
+  
+  .lightbox-content img {
+    max-height: calc(80vh - 0.8rem);
+  }
+  
+  .lightbox-caption {
+    font-size: 0.9rem; /* Smaller font size */
+    bottom: -3.5rem; /* Moved further down */
+    padding: 0.5rem; /* Reduced padding */
+    line-height: 1.3; /* Better line height for readability */
+  }
+}
+
+@media (max-width: 480px) {
+  .lightbox-content {
+    max-height: 75vh; /* Even more reduced height for smaller screens */
+  }
+  
+  .lightbox-content img {
+    max-height: calc(75vh - 0.6rem);
+  }
+  
+  .lightbox-caption {
+    bottom: -4rem; /* Moved even further down for smallest screens */
+  }
 }
 
 /* Blog listing styles */
@@ -588,3 +619,176 @@ header {
     height: 2px;
     background-color: #0074d9;
 }
+
+/* 404 Error Page Styles */
+.error-container {
+    text-align: center;
+    padding: 4rem;
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    border: 2px solid #000;
+    position: relative;
+    overflow: hidden;
+}
+
+.error-container h1 {
+    font-size: 6rem;
+    font-weight: 300;
+    margin: 0 0 2.5rem 0;
+    color: #333;
+    letter-spacing: 0.1em;
+    position: relative;
+}
+
+/* Intensified glitch effect for 404 */
+.error-container h1::before,
+.error-container h1::after {
+    content: "404";
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+}
+
+.error-container h1::before {
+    left: 3px;
+    text-shadow: -2px 0 #00ffff;
+    animation: glitch-1 4s infinite linear alternate-reverse;
+}
+
+.error-container h1::after {
+    left: -3px;
+    text-shadow: 2px 0 #ff00ff;
+    animation: glitch-2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-1 {
+    0%, 85% { clip-path: inset(0 0 0 0); }
+    86% { clip-path: inset(65% 0 25% 0); }
+    87% { clip-path: inset(15% 0 75% 0); }
+    88% { clip-path: inset(85% 0 5% 0); }
+    89% { clip-path: inset(35% 0 55% 0); }
+    90% { clip-path: inset(45% 0 35% 0); }
+    91% { clip-path: inset(25% 0 65% 0); }
+    92% { clip-path: inset(75% 0 15% 0); }
+    93% { clip-path: inset(5% 0 85% 0); }
+    94% { clip-path: inset(95% 0 5% 0); }
+    95% { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes glitch-2 {
+    0%, 85% { clip-path: inset(0 0 0 0); }
+    86% { clip-path: inset(65% 0 25% 0); }
+    87% { clip-path: inset(15% 0 75% 0); }
+    88% { clip-path: inset(85% 0 5% 0); }
+    89% { clip-path: inset(35% 0 55% 0); }
+    90% { clip-path: inset(45% 0 35% 0); }
+    91% { clip-path: inset(25% 0 65% 0); }
+    92% { clip-path: inset(75% 0 15% 0); }
+    93% { clip-path: inset(5% 0 85% 0); }
+    94% { clip-path: inset(95% 0 5% 0); }
+    95% { clip-path: inset(0 0 0 0); }
+}
+
+.error-container h2 {
+    font-size: 1.5rem;
+    margin: 1.5rem 0;
+    color: #333;
+    font-weight: 300;
+}
+
+.error-container p {
+    font-size: 1.1rem;
+    margin: 1rem 0;
+    color: #666;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+.error-container .home-link {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.8rem 1.5rem;
+    color: #333;
+    text-decoration: none;
+    border: 2px solid #333;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+}
+
+.error-container .home-link:hover {
+    background: #333;
+    color: #fff;
+}
+
+.error-container .compass {
+    font-size: 3rem;
+    margin: 1.5rem 0;
+    color: #333;
+    display: inline-block;
+    position: relative;
+}
+
+.error-container .compass i {
+    display: block;
+    animation: base-rotate 4s linear infinite;
+}
+
+.error-container .compass i::before,
+.error-container .compass i::after {
+    content: "\f14e";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.error-container .compass i::before {
+    text-shadow: -2px 0 #00ffff;
+    animation: compass-glitch-1 2s infinite;
+    opacity: 0.8;
+}
+
+.error-container .compass i::after {
+    text-shadow: 2px 0 #ff00ff;
+    animation: compass-glitch-2 2.5s infinite;
+    opacity: 0.8;
+}
+
+@keyframes base-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes compass-glitch-1 {
+    0%, 92% { transform: translate(-50%, -50%) rotate(0deg); opacity: 0.8; }
+    30% { transform: translate(-48%, -48%) rotate(5deg); opacity: 0.5; }
+    60% { transform: translate(-52%, -52%) rotate(-5deg); opacity: 0.7; }
+    80% { transform: translate(-51%, -49%) rotate(3deg); opacity: 0.6; }
+}
+
+@keyframes compass-glitch-2 {
+    0%, 92% { transform: translate(-50%, -50%) rotate(0deg); opacity: 0.8; }
+    30% { transform: translate(-52%, -48%) rotate(-5deg); opacity: 0.5; }
+    60% { transform: translate(-48%, -52%) rotate(5deg); opacity: 0.7; }
+    80% { transform: translate(-49%, -51%) rotate(-3deg); opacity: 0.6; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.error-container > * {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.error-container > *:nth-child(1) { animation-delay: 0.1s; }
+.error-container > *:nth-child(2) { animation-delay: 0.2s; }
+.error-container > *:nth-child(3) { animation-delay: 0.3s; }
+.error-container > *:nth-child(4) { animation-delay: 0.4s; }

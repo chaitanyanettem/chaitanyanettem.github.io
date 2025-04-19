@@ -1,7 +1,7 @@
 {
     "date": "2025-04-15",
     "tags": ["go", "programming"],
-    "short": "A short introduction to Go from an experienced developer's perspective.",
+    "short": "Some notes on Go.",
     "slug": "learning-go"
 }
 

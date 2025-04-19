@@ -20,7 +20,7 @@ type BlogMetadata struct {
 	Date  string   `json:"date"`
 	Tags  []string `json:"tags"`
 	Short string   `json:"short"`
-	Slug  string   `json:"slug"` // Add slug to metadata struct
+	Slug  string   `json:"slug"`
 }
 
 type BlogPost struct {
@@ -34,8 +34,9 @@ type PageData struct {
 	Timestamp   int64
 	CurrentPage string
 	Content     string
-	LastUpdated string  // This will now be per-file
+	LastUpdated string
 	BlogPosts   []BlogPost
+	Is404       bool
 }
 
 const htmlTemplate = `<!DOCTYPE html>
@@ -43,7 +44,7 @@ const htmlTemplate = `<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chaitanya Nettem - Personal Website</title>
+    <title>{{if .Is404}}404 - Page Not Found | {{end}}Chaitanya Nettem</title>
     
     <!-- Preload critical assets -->
     <link rel="preload" href="/styles.css?v={{.Timestamp}}" as="style">
@@ -55,7 +56,9 @@ const htmlTemplate = `<!DOCTYPE html>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     
     <!-- Add meta description for SEO -->
+    {{if not .Is404}}
     <meta name="description" content="Personal website of Chaitanya Nettem, Software Engineer at Rubrik">
+    {{end}}
     
     <!-- Prevent FOUC -->
     <script>
@@ -158,7 +161,7 @@ func main() {
 				post.Title,
 				post.Metadata.Date,
 				post.Content),
-			LastUpdated: getLastModifiedDate(file),  // Use the source file's last modified date
+			LastUpdated: getLastModifiedDate(file), // Use the source file's last modified date
 		}
 
 		outPath := filepath.Join("blog", post.Slug+".html")
@@ -249,7 +252,7 @@ func main() {
 			Timestamp:   timestamp,
 			CurrentPage: outFilename,
 			Content:     markdownToHTML(mdContent),
-			LastUpdated: getLastModifiedDate(file),  // Use the source file's last modified date
+			LastUpdated: getLastModifiedDate(file), // Use the source file's last modified date
 		}
 
 		outFile, err := os.Create(outFilename)
@@ -265,6 +268,35 @@ func main() {
 
 		fmt.Printf("Successfully converted %s to %s\n", file, outFilename)
 	}
+
+	// Generate 404 page
+	errorContent, err := os.ReadFile("content/error.md")
+	if err != nil {
+		fmt.Printf("Error reading error.md: %v\n", err)
+		return
+	}
+
+	// Convert markdown to HTML and wrap in error-container
+	htmlContent := fmt.Sprintf(`<div class="error-container">%s</div>`, markdownToHTML(errorContent))
+
+	data404 := PageData{
+		Timestamp:   timestamp,
+		CurrentPage: "404.html",
+		Content:     htmlContent,
+		LastUpdated: time.Now().Format("January 2006"),
+		Is404:       true,
+	}
+
+	// Create 404 page
+	outFile, err = os.Create("404.html")
+	if err != nil {
+		fmt.Printf("Error creating 404 page: %v\n", err)
+		return
+	}
+	if err := tmpl.Execute(outFile, data404); err != nil {
+		fmt.Printf("Error executing template for 404 page: %v\n", err)
+	}
+	outFile.Close()
 
 	fmt.Println("Website generation complete!")
 }

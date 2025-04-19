@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chaitanya Nettem</title>
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="/styles.css?v=1745025958" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Add meta description for SEO -->
+    <meta name="description" content="An interesting tidbit about stdin and Linux">
+    
+    <!-- Prevent FOUC -->
+    <script>
+        let FF_FOUC_FIX;
+    </script>
+    
+    <!-- Add Prism.js CSS before your main stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css">
+    
+    <!-- Load styles -->
+    <link rel="stylesheet" href="/styles.css?v=1745025958">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Add Prism.js and its plugins after your main script -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+    
+    <!-- Defer non-critical JavaScript -->
+    <script defer src="/script.js?v=1745025958"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="site-title"><a href="/">Chaitanya Nettem</a></h1>
+            <div class="nav-container">
+                <nav class="nav-links">
+                    <a href="/blog/" class="active">BLOG</a> /
+                    <a href="/photography.html" >PHOTOGRAPHY</a> /
+                    <a href="/Chaitanya_Nettem_CV.pdf">RESUME</a>
+                </nav>
+                <div class="social-links">
+                    <a href="https://github.com/chaitanyanettem" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/cnettem" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </header>
+        
+				<div class="back-link">
+					<a href="/blog/">Back to All Blogs</a>
+				</div>
+				<h1>Why there's a 4096 character limit on input from stdin</h1>
+				<div class="post-meta">
+					<span class="post-date">December 6, 2015</span>
+					<span class="reading-time">3 minute read</span>
+				</div>
+				<p><em>Originally posted at <a href="http://blog.chaitanya.im/4096-limit" target="_blank">http://blog.chaitanya.im/4096-limit</a></em></p>
+
+<p>The other day I had just started working on puzzles in <a href="https://adventofcode.com/2015" target="_blank">Advent of Code</a> after seeing it on HackerNews (The puzzles are fun. You should definitely try them out). The first half of the first problem was very easy and so I finished it in less than 5 minutes. Only to find out that my program was generating the wrong solution for the given input. I was confounded. There was nothing logically wrong with it. <a href="https://adventofcode.com/2015/day/1" target="_blank">This</a> was the problem and the solution looked like this:</p>
+
+<div class="code-block-wrapper">
+		<pre><code class="language-python">class day_1:
+    str = ""
+    floor = 0
+    def __init__(self, str):
+        self.str = str
+
+    def calculate(self):
+        for c in str:
+            if c == '(':
+                self.floor += 1
+            else:
+                self.floor -= 1
+
+if __name__ == "__main__":
+    str = input("Enter input string: ")
+    print(len(str))
+    x = day_1(str)
+    x.calculate()
+    print(x.floor)
+</code></pre>
+		<button class="expand-code" aria-label="Expand code">
+			<span class="expand-text">Show more</span>
+			<span class="collapse-text">Show less</span>
+		</button>
+	</div>
+
+<p>As you can see the program is pretty simple; it reads an input string from the commandline and processes the string. On checking the size of the input string in the program, I found that its size was 4095 characters. Comparing that to the actual input string from the website I found that <em>its</em> size was some 7000 odd characters. The reason for this discrepancy as I later found out is that the Linux commandline (and I believe all POSIX compliant commandlines) can take upto 4096 characters of input (4kB) only.</p>
+
+<p>If you just want to know what the solution to this problem is then here it is. There are two options:
+- Read from a file instead of taking input from the command line.
+- Or enter the command <code>stty -icanon</code> before starting your program. This will change the input mode to <code>noncanonical</code> mode which allows your inputs to be as big as you want. Be aware that this will remove all text processing capabilities from commandline input. I.e. you won’t be able to use your arrow keys, backspace, delete, ability to end input using ctrl-D etc. <code>stty icannon</code> will revert the input to canonical mode.</p>
+
+<p>If you’re now wondering what canonical and non-canonical mean then read on.</p>
+
+<h2 id="what-is-canonical-mode-why-does-it-limit-the-input-size">What is canonical mode? Why does it limit the input size?</h2>
+
+<p>How the data input in the terminal by the user is provided to a process depends on whether the terminal is in the canonical or non-canonical mode.</p>
+
+<ul>
+<li>In Canonical mode the terminal provides basic text processing abilities on input: You can navigate inside the input buffer using arrow keys; erase, delete, EOF signals are captured and applicable text processing is performed. Text is passed to the process only when a new line is encountered or when the buffer is full. The size of the buffer is usually 4096 and <strong>this</strong> is why the input size is limited. As mentioned above you can switch from canonical to non-canonical mode using <code>stty -icanon</code>.</li>
+<li>Non-Canonical mode has none of these text-processing capabilities. I.e if you wanted to implement a commandline tool like <code>cat</code> and you wanted it to operate in a non-canonical environment you’d have to implement some of these capabilities yourself within your program. You can switch back to canonical mode using <code>stty icanon</code>.</li>
+</ul>
+
+<p>More info is available here:</p>
+
+<ol>
+<li><a href="https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap11.html#tag_11_01_05" target="_blank">The Open Group Base Specifications Issue 7 — General Terminal Interface</a></li>
+<li><a href="https://unix.stackexchange.com/questions/131105/how-to-read-over-4k-input-without-new-lines-on-a-terminal" target="_blank">This unix.stackexchange question</a></li>
+<li>Also, you can see the actual buffer size defined <a href="https://github.com/torvalds/linux/blob/3088d26962e802efa3aa5188f88f82a957f50b22/drivers/tty/n_tty.c#L59" target="_blank">here</a> (<code>N_TTY_BUF_SIZE</code> on line #59)</li>
+</ol>
+
+        <div class="footer">
+            <span class="last-updated">Last updated: April 2025</span>
+            <span class="copyright">© Chaitanya Nettem</span>
+        </div>
+    </div>
+</body>
+</html>

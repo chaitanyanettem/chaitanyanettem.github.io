@@ -53,4 +53,22 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Initialize code blocks
+    document.querySelectorAll('.code-block-wrapper').forEach(wrapper => {
+        const pre = wrapper.querySelector('pre');
+        
+        // Check if the content is taller than max-height
+        if (pre.scrollHeight > pre.clientHeight) {
+            wrapper.classList.add('collapsible');
+        }
+        
+        // Add click handler for expand button
+        const expandBtn = wrapper.querySelector('.expand-code');
+        if (expandBtn) {
+            expandBtn.addEventListener('click', () => {
+                wrapper.classList.toggle('expanded');
+            });
+        }
+    });
 });

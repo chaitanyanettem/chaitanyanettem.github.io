@@ -6,7 +6,7 @@
     <title>Chaitanya Nettem</title>
     
     <!-- Preload critical assets -->
-    <link rel="preload" href="/styles.css?v=1745021982" as="style">
+    <link rel="preload" href="/styles.css?v=1745025958" as="style">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
     
     <!-- Preconnect to external domains -->
@@ -15,21 +15,29 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     
     <!-- Add meta description for SEO -->
-    
-    <meta name="description" content="Personal website of Chaitanya Nettem, Software Engineer at Rubrik">
-    
+    <meta name="description" content="Technical articles on software engineering, distributed systems, and programming by Chaitanya Nettem, Software Engineer at Rubrik.">
     
     <!-- Prevent FOUC -->
     <script>
         let FF_FOUC_FIX;
     </script>
     
+    <!-- Add Prism.js CSS before your main stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css">
+    
     <!-- Load styles -->
-    <link rel="stylesheet" href="/styles.css?v=1745021982">
+    <link rel="stylesheet" href="/styles.css?v=1745025958">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
+    <!-- Add Prism.js and its plugins after your main script -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+    
     <!-- Defer non-critical JavaScript -->
-    <script defer src="/script.js?v=1745021982"></script>
+    <script defer src="/script.js?v=1745025958"></script>
 </head>
 <body>
     <div class="container">
@@ -50,6 +58,10 @@
         <h3 id="learning-go-learning-go-html-span-class-post-date-2025-04-15-span"><a href="./learning-go.html">Learning Go</a> <span class="post-date">2025-04-15</span></h3>
 
 <p>Some notes on Go.</p>
+
+<h3 id="why-there-s-a-4096-character-limit-on-input-from-stdin-4096-limit-html-span-class-post-date-2015-12-06-span"><a href="./4096-limit.html">Why there&rsquo;s a 4096 character limit on input from stdin</a> <span class="post-date">2015-12-06</span></h3>
+
+<p>An interesting tidbit about stdin and Linux</p>
 
         <div class="footer">
             <span class="last-updated">Last updated: April 2025</span>

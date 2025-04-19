@@ -7,5 +7,5 @@
 
 # Learning Go
 
-I recently had to pickup Go for work. This post contains my notes on the language.
+I recently picked up Go for work when I moved to a new team at work. This post contains my notes on the language.
 

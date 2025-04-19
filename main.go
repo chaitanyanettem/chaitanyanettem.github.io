@@ -27,6 +27,7 @@ type BlogPost struct {
 	Metadata BlogMetadata
 	Title    string
 	Content  string
+	RawContent string // Add this field
 	Slug     string
 }
 
@@ -37,6 +38,7 @@ type PageData struct {
 	LastUpdated string
 	BlogPosts   []BlogPost
 	Is404       bool
+	MetaDesc    string
 }
 
 const htmlTemplate = `<!DOCTYPE html>
@@ -56,18 +58,26 @@ const htmlTemplate = `<!DOCTYPE html>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     
     <!-- Add meta description for SEO -->
-    {{if not .Is404}}
-    <meta name="description" content="Personal website of Chaitanya Nettem, Software Engineer at Rubrik">
-    {{end}}
+    <meta name="description" content="{{.MetaDesc}}">
     
     <!-- Prevent FOUC -->
     <script>
         let FF_FOUC_FIX;
     </script>
     
+    <!-- Add Prism.js CSS before your main stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css">
+    
     <!-- Load styles -->
     <link rel="stylesheet" href="/styles.css?v={{.Timestamp}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Add Prism.js and its plugins after your main script -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
     
     <!-- Defer non-critical JavaScript -->
     <script defer src="/script.js?v={{.Timestamp}}"></script>
@@ -149,6 +159,7 @@ func main() {
 		data := PageData{
 			Timestamp:   timestamp,
 			CurrentPage: "blog/" + post.Slug + ".html",
+			MetaDesc:    post.Metadata.Short, // Just use the short description directly
 			Content: fmt.Sprintf(`
 				<div class="back-link">
 					<a href="/blog/">Back to All Blogs</a>
@@ -156,12 +167,14 @@ func main() {
 				<h1>%s</h1>
 				<div class="post-meta">
 					<span class="post-date">%s</span>
+					<span class="reading-time">%d minute read</span>
 				</div>
 				%s`,
 				post.Title,
-				post.Metadata.Date,
+				formatBlogDate(post.Metadata.Date),
+				calculateReadingTime(post.RawContent),
 				post.Content),
-			LastUpdated: getLastModifiedDate(file), // Use the source file's last modified date
+			LastUpdated: getLastModifiedDate(file),
 		}
 
 		outPath := filepath.Join("blog", post.Slug+".html")
@@ -217,8 +230,10 @@ func main() {
 	data := PageData{
 		Timestamp:   timestamp,
 		CurrentPage: "blog/index.html",
+		MetaDesc:    "Technical articles on software engineering, distributed systems, and programming by Chaitanya Nettem, Software Engineer at Rubrik.",
 		Content:     markdownToHTML([]byte(blogIndexContent.String())),
 		LastUpdated: lastUpdated,
+		BlogPosts:   blogPosts,
 	}
 
 	outFile, err := os.Create(filepath.Join("blog", "index.html"))
@@ -251,8 +266,9 @@ func main() {
 		data := PageData{
 			Timestamp:   timestamp,
 			CurrentPage: outFilename,
+			MetaDesc:    "Personal website of Chaitanya Nettem. Writing about distributed systems, software architecture, and sharing photography.",
 			Content:     markdownToHTML(mdContent),
-			LastUpdated: getLastModifiedDate(file), // Use the source file's last modified date
+			LastUpdated: getLastModifiedDate(file),
 		}
 
 		outFile, err := os.Create(outFilename)
@@ -303,6 +319,26 @@ func main() {
 
 func markdownToHTML(md []byte) string {
 	content := string(md)
+
+	// Handle code blocks with language specification
+	codeBlockRe := regexp.MustCompile("```([a-zA-Z0-9]+)\n([^`]+)```")
+	content = codeBlockRe.ReplaceAllString(content, `<div class="code-block-wrapper">
+		<pre><code class="language-$1">$2</code></pre>
+		<button class="expand-code" aria-label="Expand code">
+			<span class="expand-text">Show more</span>
+			<span class="collapse-text">Show less</span>
+		</button>
+	</div>`)
+
+	// Handle code blocks without language specification
+	plainCodeBlockRe := regexp.MustCompile("```\n([^`]+)```")
+	content = plainCodeBlockRe.ReplaceAllString(content, `<div class="code-block-wrapper">
+		<pre><code class="language-plaintext">$1</code></pre>
+		<button class="expand-code" aria-label="Expand code">
+			<span class="expand-text">Show more</span>
+			<span class="collapse-text">Show less</span>
+		</button>
+	</div>`)
 
 	// Handle tooltips
 	tooltipRe := regexp.MustCompile(`\[([^\]]+)\]{tooltip="([^"]+)"}`)
@@ -391,24 +427,15 @@ func processBlogPost(filename string) (BlogPost, error) {
 	}
 	title := matches[1]
 
-	// Remove the title from the content and convert to HTML
+	// Remove the title from the content
 	contentWithoutTitle := titleRe.ReplaceAllString(parts[1], "")
-
-	// Use metadata slug if available, otherwise derive from filename
-	var slug string
-	if metadata.Slug != "" {
-		slug = metadata.Slug
-	} else {
-		// Remove .md extension and use filename
-		base := filepath.Base(filename)
-		slug = strings.TrimSuffix(base, ".md")
-	}
 
 	return BlogPost{
 		Metadata: metadata,
 		Title:    title,
 		Content:  markdownToHTML([]byte(contentWithoutTitle)),
-		Slug:     slug,
+		RawContent: contentWithoutTitle, // Store the raw content
+		Slug:     metadata.Slug,
 	}, nil
 }
 
@@ -418,4 +445,24 @@ func getLastModifiedDate(filepath string) string {
 		return time.Now().Format("January 2006")
 	}
 	return info.ModTime().Format("January 2006")
+}
+
+// Add this function to calculate reading time
+func calculateReadingTime(content string) int {
+	// Average reading speed: 200 words per minute
+	words := len(strings.Fields(content))
+	minutes := (words + 199) / 200 // Round up to nearest minute
+	if minutes < 1 {
+		minutes = 1
+	}
+	return minutes
+}
+
+// Add this new function to format the date
+func formatBlogDate(dateStr string) string {
+	t, err := time.Parse("2006-01-02", dateStr)
+	if err != nil {
+		return dateStr
+	}
+	return t.Format("January 2, 2006")
 }

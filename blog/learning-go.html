@@ -1,43 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<!-- Critical CSS to prevent FOUC -->
+	<style>
+        .no-fouc {
+            visibility: hidden;
+        }
+        
+        /* Critical styles that should load immediately */
+        body {
+            margin: 0;
+            font-family: sans-serif;
+        }
+        
+        .container {
+            max-width: 90%;
+            margin: 0 auto;
+        }
+    </style>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XFTB75P19P"></script>
+	<script>
+		document.documentElement.className = 'no-fouc';
+		if (navigator.doNotTrack !== "1" && window.doNotTrack !== "1" && navigator.msDoNotTrack !== "1") {
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', 'G-XFTB75P19P');
+		} else {
+			console.log("Do Not Track is enabled. Google Analytics will not be loaded.");
+		}
+	</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chaitanya Nettem</title>
     
     <!-- Preload critical assets -->
-    <link rel="preload" href="/styles.css?v=1745042281" as="style">
+    <link rel="preload" href="/styles.css?v=1745044648" as="style">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
     
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     
     <!-- Add meta description for SEO -->
     <meta name="description" content="Some notes on Go.">
-    
-    <!-- Prevent FOUC -->
-    <script>
-        let FF_FOUC_FIX;
-    </script>
     
     <!-- Add Prism.js CSS before your main stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css">
     
     <!-- Load styles -->
-    <link rel="stylesheet" href="/styles.css?v=1745042281">
+    <link rel="stylesheet" href="/styles.css?v=1745044648">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Add Prism.js and its plugins after your main script -->
+
+	<!-- Add Prism.js and its plugins after your main script -->
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
-    
+
+        
     <!-- Defer non-critical JavaScript -->
-    <script defer src="/script.js?v=1745042281"></script>
+    <script defer src="/script.js?v=1745044648"></script>
+	<script>
+        window.addEventListener('load', function() {
+            document.documentElement.className = '';
+		});
+    </script>
 </head>
 <body>
     <div class="container">

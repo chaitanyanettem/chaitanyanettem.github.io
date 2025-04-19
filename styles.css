@@ -1,7 +1,13 @@
+.no-fouc {
+  visibility: hidden;
+}
+
 @import url(https://fonts.googleapis.com/css?family=Roboto:300,400);  /* Changed 500 to 400 */
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 html {
+  visibility: visible;
+  opacity: 1;
   font: 16px/1.5 "Roboto", sans-serif;
   font-weight: 300;  /* Keep body text light at 300 */
 }
@@ -67,11 +73,6 @@ body {
   height: auto;
   display: block;
   transition: transform 0.3s ease;
-}
-
-/* Remove the scale transform from img since we're transforming the entire card */
-.photo-item:hover img {
-  transform: none;
 }
 
 .photo-caption {
@@ -944,23 +945,6 @@ div.code-toolbar > .toolbar > .toolbar-item > button {
     margin-left: 1rem;
     padding-left: 1rem;
     border-left: 1px solid #ddd;
-}
-
-/* Enhanced blur effect for collapsed code blocks */
-.code-block-wrapper:not(.expanded) pre[class*="language-"]::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100px;
-    background: linear-gradient(
-        transparent 0%,
-        rgba(245, 245, 245, 0.8) 50%,
-        rgba(245, 245, 245, 0.95) 75%,
-        rgba(245, 245, 245, 1) 100%
-    );
-    pointer-events: none;
 }
 
 /* Keep the original date format in the blog listing */

@@ -36,7 +36,7 @@
     <title>Chaitanya Nettem</title>
     
     <!-- Preload critical assets -->
-    <link rel="preload" href="/styles.css?v=1745044648" as="style">
+    <link rel="preload" href="/styles.css?v=1745106978" as="style">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
     
     <!-- Preconnect to external domains -->
@@ -51,7 +51,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css">
     
     <!-- Load styles -->
-    <link rel="stylesheet" href="/styles.css?v=1745044648">
+    <link rel="stylesheet" href="/styles.css?v=1745106978">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 	<!-- Add Prism.js and its plugins after your main script -->
@@ -62,7 +62,7 @@
 
         
     <!-- Defer non-critical JavaScript -->
-    <script defer src="/script.js?v=1745044648"></script>
+    <script defer src="/script.js?v=1745106978"></script>
 	<script>
         window.addEventListener('load', function() {
             document.documentElement.className = '';
@@ -89,12 +89,13 @@
 				<div class="back-link">
 					<a href="/blog/">Back to All Blogs</a>
 				</div>
-				<h1>Why there's a 4096 character limit on input from stdin</h1>
-				<div class="post-meta">
-					<span class="post-date">December 6, 2015</span>
-					<span class="reading-time">3 minute read</span>
-				</div>
-				<p><em>Originally posted at <a href="http://blog.chaitanya.im/4096-limit" target="_blank">http://blog.chaitanya.im/4096-limit</a></em></p>
+				<div class="blog-post-container">
+					<h1>Why there's a 4096 character limit on input from stdin</h1>
+					<div class="post-meta">
+						<span class="post-date">December 6, 2015</span>
+						<span class="reading-time">3 minute read</span>
+					</div>
+					<p><em>Originally posted at <a href="http://blog.chaitanya.im/4096-limit" target="_blank">http://blog.chaitanya.im/4096-limit</a></em></p>
 
 <p>The other day I had just started working on puzzles in <a href="https://adventofcode.com/2015" target="_blank">Advent of Code</a> after seeing it on HackerNews (The puzzles are fun. You should definitely try them out). The first half of the first problem was very easy and so I finished it in less than 5 minutes. Only to find out that my program was generating the wrong solution for the given input. I was confounded. There was nothing logically wrong with it. <a href="https://adventofcode.com/2015/day/1" target="_blank">This</a> was the problem and the solution looked like this:</p>
 
@@ -150,6 +151,7 @@ if __name__ == "__main__":
 <li>Also, you can see the actual buffer size defined <a href="https://github.com/torvalds/linux/blob/3088d26962e802efa3aa5188f88f82a957f50b22/drivers/tty/n_tty.c#L59" target="_blank">here</a> (<code>N_TTY_BUF_SIZE</code> on line #59)</li>
 </ol>
 
+				</div>
         <div class="footer">
             <span class="last-updated">Last updated: April 2025</span>
             <span class="copyright">© Chaitanya Nettem</span>

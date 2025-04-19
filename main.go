@@ -194,12 +194,14 @@ func main() {
 				<div class="back-link">
 					<a href="/blog/">Back to All Blogs</a>
 				</div>
-				<h1>%s</h1>
-				<div class="post-meta">
-					<span class="post-date">%s</span>
-					<span class="reading-time">%d minute read</span>
-				</div>
-				%s`,
+				<div class="blog-post-container">
+					<h1>%s</h1>
+					<div class="post-meta">
+						<span class="post-date">%s</span>
+						<span class="reading-time">%d minute read</span>
+					</div>
+					%s
+				</div>`,
 				post.Title,
 				formatBlogDate(post.Metadata.Date),
 				calculateReadingTime(post.RawContent),

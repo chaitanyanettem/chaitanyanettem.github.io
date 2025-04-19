@@ -14,7 +14,7 @@ html {
 
 @media (min-width: 30rem) {
   html {
-    font-size: 20px;
+    font-size: 19px;
   }
 }
 
@@ -27,7 +27,7 @@ body {
 
 .container {
   max-width: 90%;  /* Keep this for mobile responsiveness */
-  width: 760px;    /* Narrow width for all content */
+  width: 860px;    /* Narrow width for all content */
   margin: 0 auto;
   padding: 0 1rem 5rem;
   position: relative;  /* Add this to establish positioning context */
@@ -45,6 +45,7 @@ body {
   column-gap: 2rem; /* Increased back to 2rem for more space between columns */
   padding: 0 2rem;
   box-sizing: border-box;  /* Added to include padding in width calculation */
+  margin-top: 2rem;
 }
 
 .photo-item {
@@ -546,18 +547,6 @@ a[tooltip] {
     margin-right: 0.5rem;
 }
 
-.post-meta {
-    margin: 0.5rem 0 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #eee;
-}
-
-.post-meta .post-date {
-    font-size: 0.9rem;
-    color: #666;
-    font-style: italic;
-}
-
 /* Ensure the content h1 is removed since we're adding it manually */
 .post-content h1:first-child {
     display: none;
@@ -932,7 +921,9 @@ div.code-toolbar > .toolbar > .toolbar-item > button {
 
 /* Blog post meta information */
 .post-meta {
-    margin-bottom: 2rem;
+    margin: 0.5rem 0 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
     color: #666;
     font-size: 0.9rem;
 }
@@ -953,4 +944,16 @@ div.code-toolbar > .toolbar > .toolbar-item > button {
     color: #666;
     font-weight: 300;
     font-style: italic;
+}
+
+.blog-post-container h1 {
+    margin-top: 0;  /* Remove top margin for h1 inside the container */
+    margin-bottom: 1rem;  /* Keep some space below the title */
+}
+
+.blog-post-container {
+    border: 1px solid black;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    border-radius: 4px;
 }

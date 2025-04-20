@@ -40,20 +40,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Handle image orientation
-    const photoGrid = document.querySelector('.photo-grid');
-    if (photoGrid) {
-        const photoItems = photoGrid.querySelectorAll('.photo-item img');
-        
-        photoItems.forEach(img => {
-            if (img.complete) {
-                setImageOrientation(img);
-            } else {
-                img.addEventListener('load', () => setImageOrientation(img));
-            }
-        });
-    }
-
     // Initialize code blocks
     document.querySelectorAll('.code-block-wrapper').forEach(wrapper => {
         const pre = wrapper.querySelector('pre');

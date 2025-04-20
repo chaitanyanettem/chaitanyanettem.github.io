@@ -385,7 +385,7 @@ func markdownToHTML(md []byte) string {
 		for _, match := range photoMatches {
 			photoHTML += fmt.Sprintf(`<div class="photo-item">
 				<a href="./content/photos/%s" class="lightbox">
-					<img src="./content/photos/%s" alt="%s">
+					<img src="./content/photos/%s" alt="%s" loading="lazy">
 					<p class="photo-caption">%s</p>
 				</a>
 			</div>`, match[1], match[1], match[2], match[2])

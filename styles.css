@@ -36,15 +36,15 @@ body {
 
 /* Photography Grid */
 .photo-grid {
-  width: calc(100vw - 4rem); /* Account for padding */
-  max-width: 1400px;  /* Increased from 1200px */
+  width: calc(100vw - 4rem);
+  max-width: 1400px;
   margin-left: 50%;
   transform: translateX(-50%);
   position: relative;
   columns: 3;
-  column-gap: 2rem; /* Increased back to 2rem for more space between columns */
+  column-gap: 2rem;
   padding: 0 2rem;
-  box-sizing: border-box;  /* Added to include padding in width calculation */
+  box-sizing: border-box;
   margin-top: 2rem;
 }
 
@@ -55,32 +55,35 @@ body {
   width: 100%;
   display: inline-block;
   padding: 0.5rem;
-  background: #cbd7ec; /* Darker, more noticeable vintage paper color */
-  box-shadow: 0 5px 7px rgba(0, 0, 0, 0.15); /* Increased shadow depth and spread */
+  background: #cbd7ec;
+  box-shadow: 0 5px 7px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   transform-origin: center center;
   box-sizing: border-box;
+  aspect-ratio: 3/2; /* Add aspect ratio to maintain layout before image loads */
+  overflow: hidden; /* Hide overflow during loading */
 }
 
 .photo-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* Increased hover shadow */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
   z-index: 1;
-  background: #e3dfd2; /* Darker hover state for better contrast */
+  background: #e3dfd2;
 }
 
 .photo-item img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
   transition: transform 0.3s ease;
 }
 
 .photo-caption {
   position: absolute;
-  bottom: 0.5rem; /* Adjusted to match new padding */
-  left: 0.5rem;   /* Adjusted to match new padding */
-  right: 0.5rem;  /* Adjusted to match new padding */
+  bottom: 0.5rem;
+  left: 0.5rem;
+  right: 0.5rem;
   background: rgba(0, 0, 0, 0.7);
   color: white;
   padding: 1rem;
@@ -96,22 +99,19 @@ body {
 @media (max-width: 1400px) {
   .photo-grid {
     columns: 2;
-    column-gap: 2rem; /* Keep consistent gap */
+    column-gap: 2rem;
   }
 }
 
 @media (max-width: 768px) {
   .photo-grid {
-    width: 100%;
-    margin: 0;
     columns: 1;
-    column-gap: 0;
-    padding: 1rem; /* Add some padding on mobile */
-    transform: none;
+    column-gap: 1rem;
+    padding: 0 1rem;
   }
   
   .photo-item {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 }
 

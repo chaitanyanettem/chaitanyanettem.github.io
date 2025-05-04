@@ -103,11 +103,10 @@ const htmlTemplate = `<!DOCTYPE html>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
 
-        
     <!-- Defer non-critical JavaScript -->
     <script defer src="/script.js?v={{.Timestamp}}"></script>
 	<script>
-        window.addEventListener('load', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             document.documentElement.className = '';
 		});
     </script>

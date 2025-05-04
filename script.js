@@ -57,4 +57,31 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+
+    // Progressive image loading
+    const images = document.querySelectorAll('.photo-item img');
+    
+    if ('loading' in HTMLImageElement.prototype) {
+        // Browser supports native lazy loading
+        images.forEach(img => {
+            img.loading = 'lazy';
+        });
+    } else {
+        // Fallback for browsers that don't support lazy loading
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    observer.unobserve(img);
+                }
+            });
+        });
+
+        images.forEach(img => {
+            img.dataset.src = img.src;
+            img.src = ''; // Clear src to prevent immediate loading
+            imageObserver.observe(img);
+        });
+    }
 });

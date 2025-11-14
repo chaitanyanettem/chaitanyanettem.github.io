@@ -1,5 +1,6 @@
 I shoot with a Sony A6400. My lenses are a Sony 18-55mm f/3.5-5.6 and a TTArtisan 25mm f/2. Some photos are from my trusty OnePlus 7T.
 
+![@photo="photos/lazy-afternoon-at-dolores-park.webp" caption="Lazy afternoon at Dolores Park, San Francisco, June 2025"]
 ![@photo="photos/DSC03638.JPG.web.jpg" caption="The Broad, LA, June 2024"]
 ![@photo="photos/diu-sunrise-at-ghoghla-beach.webp" caption="Sunrise at Ghoghla Beach, Diu, Jan 2024"]
 ![@photo="photos/diu-sunset-at-INS-Khukri-memorial.webp" caption="Sunset at INS Khukri Memorial, Diu, Jan 2024"]

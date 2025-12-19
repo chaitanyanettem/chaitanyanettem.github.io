@@ -14,7 +14,12 @@ import (
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
+
+	_ "embed"
 )
+
+//go:embed layout.html
+var htmlTemplate string
 
 type BlogMetadata struct {
 	Date  string   `json:"date"`
@@ -41,100 +46,7 @@ type PageData struct {
 	MetaDesc    string
 }
 
-const htmlTemplate = `<!DOCTYPE html>
-<html lang="en">
-<head>
-	<!-- Critical CSS to prevent FOUC -->
-	<style>
-        .no-fouc {
-            visibility: hidden;
-        }
-        
-        /* Critical styles that should load immediately */
-        body {
-            margin: 0;
-            font-family: sans-serif;
-        }
-        
-        .container {
-            max-width: 90%;
-            margin: 0 auto;
-        }
-    </style>
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XFTB75P19P"></script>
-	<script>
-		document.documentElement.className = 'no-fouc';
-		if (navigator.doNotTrack !== "1" && window.doNotTrack !== "1" && navigator.msDoNotTrack !== "1") {
-			window.dataLayer = window.dataLayer || [];
-			function gtag(){dataLayer.push(arguments);}
-			gtag('js', new Date());
 
-			gtag('config', 'G-XFTB75P19P');
-		} else {
-			console.log("Do Not Track is enabled. Google Analytics will not be loaded.");
-		}
-	</script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{if .Is404}}404 - Page Not Found | {{end}}Chaitanya Nettem</title>
-    
-    <!-- Preload critical assets -->
-    <link rel="preload" href="/styles.css?v={{.Timestamp}}" as="style">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
-    
-    <!-- Preconnect to external domains -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- Add meta description for SEO -->
-    <meta name="description" content="{{.MetaDesc}}">
-    
-    <!-- Add Prism.js CSS before your main stylesheet -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css">
-    
-    <!-- Load styles -->
-    <link rel="stylesheet" href="/styles.css?v={{.Timestamp}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-	<!-- Add Prism.js and its plugins after your main script -->
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
-
-    <!-- Defer non-critical JavaScript -->
-    <script defer src="/script.js?v={{.Timestamp}}"></script>
-	<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.documentElement.className = '';
-		});
-    </script>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1 class="site-title"><a href="/">Chaitanya Nettem</a></h1>
-            <div class="nav-container">
-                <nav class="nav-links">
-                    <a href="/blog/" {{if hasPrefix .CurrentPage "blog/"}}class="active"{{end}}>BLOG</a> /
-                    <a href="/photography.html" {{if eq .CurrentPage "photography.html"}}class="active"{{end}}>PHOTOGRAPHY</a> /
-                    <a href="/Chaitanya_Nettem_CV.pdf">RESUME</a>
-                </nav>
-                <div class="social-links">
-                    <a href="https://github.com/chaitanyanettem" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/cnettem" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                </div>
-            </div>
-        </header>
-        {{.Content}}
-        <div class="footer">
-            <span class="last-updated">Last updated: {{.LastUpdated}}</span>
-            <span class="copyright">© Chaitanya Nettem</span>
-        </div>
-    </div>
-</body>
-</html>`
 
 func main() {
 	// Add the hasPrefix function to the template

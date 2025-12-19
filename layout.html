@@ -33,10 +33,10 @@
 	</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chaitanya Nettem</title>
+    <title>{{if .Is404}}404 - Page Not Found | {{end}}Chaitanya Nettem</title>
     
     <!-- Preload critical assets -->
-    <link rel="preload" href="/styles.css?v=1766111568" as="style">
+    <link rel="preload" href="/styles.css?v={{.Timestamp}}" as="style">
     <link rel="preload" href="/assets/css/font-awesome.min.css" as="style">
 
     <!-- Preconnect to external domains -->
@@ -44,14 +44,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Add meta description for SEO -->
-    <meta name="description" content="Some notes on Go.">
+    <meta name="description" content="{{.MetaDesc}}">
 
     <!-- Add Prism.js CSS before your main stylesheet -->
     <link rel="stylesheet" href="/assets/css/prism.min.css">
     <link rel="stylesheet" href="/assets/css/prism-toolbar.min.css">
 
     <!-- Load styles -->
-    <link rel="stylesheet" href="/styles.css?v=1766111568">
+    <link rel="stylesheet" href="/styles.css?v={{.Timestamp}}">
     <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
 
 	<!-- Add Prism.js and its plugins after your main script -->
@@ -61,7 +61,7 @@
     <script defer src="/assets/js/prism-copy-to-clipboard.min.js"></script>
 
     <!-- Defer non-critical JavaScript -->
-    <script defer src="/script.js?v=1766111568"></script>
+    <script defer src="/script.js?v={{.Timestamp}}"></script>
 	<script>
         document.addEventListener('DOMContentLoaded', function() {
             document.documentElement.className = '';
@@ -74,8 +74,8 @@
             <h1 class="site-title"><a href="/">Chaitanya Nettem</a></h1>
             <div class="nav-container">
                 <nav class="nav-links">
-                    <a href="/blog/" class="active">BLOG</a> /
-                    <a href="/photography.html" >PHOTOGRAPHY</a> /
+                    <a href="/blog/" {{if hasPrefix .CurrentPage "blog/"}}class="active"{{end}}>BLOG</a> /
+                    <a href="/photography.html" {{if eq .CurrentPage "photography.html"}}class="active"{{end}}>PHOTOGRAPHY</a> /
                     <a href="/Chaitanya_Nettem_CV.pdf">RESUME</a>
                 </nav>
                 <div class="social-links">
@@ -84,21 +84,9 @@
                 </div>
             </div>
         </header>
-        
-				<div class="back-link">
-					<a href="/blog/">Back to All Blogs</a>
-				</div>
-				<div class="blog-post-container">
-					<h1>Learning Go</h1>
-					<div class="post-meta">
-						<span class="post-date">April 15, 2025</span>
-						<span class="reading-time">1 minute read</span>
-					</div>
-					<p>I recently picked up Go for work when I moved to a new team at work. This post contains my notes on the language.</p>
-
-				</div>
+        {{.Content}}
         <div class="footer">
-            <span class="last-updated">Last updated: April 2025</span>
+            <span class="last-updated">Last updated: {{.LastUpdated}}</span>
             <span class="copyright">© Chaitanya Nettem</span>
         </div>
     </div>

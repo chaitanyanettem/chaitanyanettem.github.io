@@ -116,12 +116,21 @@ body {
 }
 
 a {
-  color: #0074d9;
+  color: #006bc9;
   text-decoration: none;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 116, 217, 0.15) 0%,
+    rgba(0, 116, 217, 0.15) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 0.2em;
+  background-position: 0 100%;
+  transition: background-size 0.2s ease;
 }
 
 a:hover, a:focus {
-  text-decoration: underline;
+  background-size: 100% 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -167,6 +176,7 @@ h1 a {
   transition: color 0.2s ease;
   white-space: nowrap;
   margin-right: 0.5rem;
+  background: none;
 }
 
 .social-links {
@@ -179,10 +189,11 @@ h1 a {
   color: #333;
   text-decoration: none;
   transition: color 0.2s ease;
+  background: none;
 }
 
 .social-links a:hover {
-  color: #0074d9;
+  color: #006bc9;
 }
 
 /* Remove any old header margin since we're using nav-container now */
@@ -199,15 +210,16 @@ header {
 .site-title a {
   color: #333;
   text-decoration: none;
+  background: none;
 }
 
 .site-title a:hover {
-  color: #0074d9;
+  color: #006bc9;
 }
 
 /* Active page indicator */
 .nav-links .active {
-  color: #0074d9;
+  color: #006bc9;
   position: relative;
 }
 
@@ -218,7 +230,7 @@ header {
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #0074d9;
+  background-color: #006bc9;
 }
 
 h2 {
@@ -273,7 +285,7 @@ blockquote {
   margin-right: 0;
   padding: .5rem 1rem;
   border-left: .25rem solid #ccc;
-  color: #666;
+  color: #3e3e3e;
 }
 
 blockquote p:last-child {
@@ -339,7 +351,7 @@ h1 {
 [tooltip] {
   position: relative;
   cursor: help;
-  border-bottom: 1px dotted #666;
+  border-bottom: 1px dotted #3e3e3e;
 }
 
 [tooltip]:hover::before {
@@ -492,7 +504,7 @@ a[tooltip] {
 
 .post-date {
     font-size: 0.8rem;
-    color: #666;
+    color: #3e3e3e;
     font-weight: 300;
     font-style: italic;
 }
@@ -512,11 +524,12 @@ a[tooltip] {
 .container h3 a {
     color: #333;
     text-decoration: none;
+    background: none;
 }
 
 .container h3 a:hover {
-    color: #0074d9;
-    text-decoration: none;
+    color: #006bc9;
+    background: none;
 }
 
 .back-link {
@@ -533,12 +546,13 @@ a[tooltip] {
     text-decoration: none;
     transition: all 0.2s ease;
     font-size: 0.9rem;
+    background-image: none;
 }
 
 .back-link a:hover {
     background-color: #e5e5e5;
     border-color: #ccc;
-    color: #0074d9;
+    color: #006bc9;
 }
 
 /* Optional: add a subtle arrow icon */
@@ -568,7 +582,7 @@ header {
 }
 
 .site-title a:hover {
-    color: #0074d9;
+    color: #006bc9;
 }
 
 .nav-links {
@@ -584,6 +598,7 @@ header {
     padding: 0.2rem 0;
     position: relative;
     transition: color 0.2s ease;
+    background: none;
 }
 
 .nav-links a:first-child {
@@ -591,12 +606,12 @@ header {
 }
 
 .nav-links a:hover {
-    color: #0074d9;
+    color: #006bc9;
 }
 
 /* Active page indicator */
 .nav-links .active {
-    color: #0074d9;
+    color: #006bc9;
     position: relative;
 }
 
@@ -607,7 +622,7 @@ header {
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: #0074d9;
+    background-color: #006bc9;
 }
 
 /* 404 Error Page Styles */
@@ -692,7 +707,7 @@ header {
 .error-container p {
     font-size: 1.1rem;
     margin: 1rem 0;
-    color: #666;
+    color: #3e3e3e;
     font-weight: 300;
     line-height: 1.6;
 }
@@ -707,6 +722,7 @@ header {
     transition: all 0.2s ease;
     font-size: 0.9rem;
     letter-spacing: 0.05em;
+    background-image: none;
 }
 
 .error-container .home-link:hover {
@@ -916,7 +932,7 @@ div.code-toolbar > .toolbar > .toolbar-item > button {
 .language-css .token.string,
 .style .token.string {
     background: transparent;
-    color: #666;
+    color: #3e3e3e;
 }
 
 /* Blog post meta information */
@@ -924,7 +940,7 @@ div.code-toolbar > .toolbar > .toolbar-item > button {
     margin: 0.5rem 0 1rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid #eee;
-    color: #666;
+    color: #3e3e3e;
     font-size: 0.9rem;
 }
 
@@ -941,7 +957,7 @@ div.code-toolbar > .toolbar > .toolbar-item > button {
 /* Keep the original date format in the blog listing */
 .container h3 .post-date {
     font-size: 0.8rem;
-    color: #666;
+    color: #3e3e3e;
     font-weight: 300;
     font-style: italic;
 }
@@ -952,7 +968,7 @@ div.code-toolbar > .toolbar > .toolbar-item > button {
 }
 
 .blog-post-container {
-    border: 1px solid black;
+    border: 1px dotted #b6b6b6;
     padding: 1.5rem;
     margin: 1rem 0;
     border-radius: 4px;

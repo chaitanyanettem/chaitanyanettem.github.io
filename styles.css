@@ -29,7 +29,7 @@ body {
   max-width: 90%;  /* Keep this for mobile responsiveness */
   width: 860px;    /* Narrow width for all content */
   margin: 0 auto;
-  padding: 0 1rem 5rem;
+  padding: 0 1rem 2rem;
   position: relative;  /* Add this to establish positioning context */
   /* Remove overflow-x: hidden from here */
 }
@@ -390,7 +390,7 @@ a[tooltip] {
 }
 
 .footer {
-  margin-top: 4rem;
+  margin-top: 2rem;
   padding-top: 1rem;
   border-top: 1px solid #eee;
   font-size: 0.8rem;
